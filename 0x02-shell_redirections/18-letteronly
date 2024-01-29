@@ -1,0 +1,2 @@
+#!/bin/bash
+grep -i 'include capital letters as well*' /etc/ssh/sshd_config

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # read and cat
 
 file="/etc/passwd"

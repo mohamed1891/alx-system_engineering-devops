@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Check if an IP address is reachable using ping
 
 if [ -z "$1" ]
 then 

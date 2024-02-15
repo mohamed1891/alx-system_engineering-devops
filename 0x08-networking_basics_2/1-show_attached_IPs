@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Display active IPv4 IPs
+ifconfig | awk '/inet / {print "Interface:", $1, "IPv4:", $2}'
+

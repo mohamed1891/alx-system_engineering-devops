@@ -1,4 +1,2 @@
 #!/bin/bash
-
-USER_NAME=$(whoami)
-echo "hello $USER_NAME"
+echo "hello $USER"

@@ -23,4 +23,3 @@ echo "server {
 
 # Restart Nginx to apply the changes
 service nginx restart
-

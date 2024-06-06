@@ -3,10 +3,10 @@
 # shellcheck disable=SC2154
 
 # Update the package lists
-apt-get update
+sudo apt-get update
 
 # Install Nginx
-apt-get -y install nginx
+sudo apt-get -y install nginx
 
 # Get the hostname of the server
 hostname=$(hostname)
@@ -22,4 +22,4 @@ echo "server {
 }" | sudo tee /etc/nginx/sites-available/default
 
 # Restart Nginx to apply the changes
-service nginx restart
+sudo service nginx restart

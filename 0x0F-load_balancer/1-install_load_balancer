@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
-# A script to Install and configure HAproxy on your lb-01 server
+# Create a script to install and configure HAProxy on lb-01 server
+
+echo -e "Updates the package information and upgrades existing packages on the system\n"
 sudo apt-get -y update
+sudo apt-get -y upgrade
 sudo apt-get -y install haproxy
-config=\
-"backend yousif-backend
-    balance roundrobin
-    server 378634-web-01 18.206.207.38:80 check
-    server 378634-web-02 3.86.7.50:80 check
-    mode http
-    timeout server 30s
-    timeout connect 5s
-frontend yousif-frontend
+
+echo -e "Appends the HAProxy configuration to /etc/haproxy/haproxy.cfg.\n"
+sudo echo "\
+frontend Xs55kh
     bind *:80
     mode http
-    default_backend yousif-backend
-    timeout client 30s
-"
-echo "$config" | sudo tee -a /etc/haproxy/haproxy.cfg
-echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+    default_backend webservers
+
+backend webservers
+    balance roundrobin
+    server web-01 18.209.224.234:80
+    server web-02 52.23.213.75:80
+" | sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null
+
 sudo service haproxy restart
+
+echo -e "\ncompleted\n"

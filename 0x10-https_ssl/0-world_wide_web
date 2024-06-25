@@ -1,16 +1,25 @@
 #!/usr/bin/env bash
-# Configure your domain zone so that the subdomain www points to your load-balancer IP (lb-01).
-# Write a Bash script that will display information about subdomains.
+# Run: ./1-world_wide_web <domain> <subdomain>
 
-dns_info() {
-    dig +noall +answer "$1" | awk -v subdomain="$2" '{print "The subdomain", subdomain,"is a", $4 ,"record and points to",$5}'
+domain_information() {
+    local subdomain="${1}"
+    local domain="${2}"
+    local record_type
+    local destination
+
+    record_type="$(dig "${subdomain}.${domain}" | grep -A1 'ANSWER SECTION:' | awk '{print $4}' | tr -d '\n')"
+    destination="$(dig "${subdomain}.${domain}" | grep -A1 'ANSWER SECTION:' | awk '{print $5}' | tr -d '\n')"
+    echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
 }
 
-if [ "$#" -eq 2 ]; then
-    dns_info "$2.$1" "$2"
-else
-    dns_info "www.$1" "www"
-    dns_info "lb-01.$1" "lb-01"
-    dns_info "web-01.$1" "web-01"
-    dns_info "web-02.$1" "web-02"
+domain="${1}"
+
+if [[ $# -eq 1 ]]; then
+    domain_information "www" "${domain}"
+    domain_information "lb-01" "${domain}"
+    domain_information "web-01" "${domain}"
+    domain_information "web-02" "${domain}"
+elif [[ $# -eq 2 ]]; then
+    subdomain="${2}"
+    domain_information "${subdomain}" "${domain}"
 fi

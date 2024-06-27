@@ -22,3 +22,4 @@ sudo ufw enable
 sudo ufw status
 
 echo -e "Completed.\n"
+    
